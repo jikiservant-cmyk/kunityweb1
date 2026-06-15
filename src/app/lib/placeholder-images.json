@@ -1,0 +1,58 @@
+{
+  "placeholderImages": [
+    {
+      "id": "hero-sacco",
+      "description": "Our Vision - Building a better tomorrow",
+      "imageUrl": "/images/IMG_8930.JPG",
+      "imageHint": "sacco vision"
+    },
+    {
+      "id": "kololo-heritage",
+      "description": "Kololo High School - Our Foundation",
+      "imageUrl": "/images/IMG_8919.jpg",
+      "imageHint": "school heritage"
+    },
+    {
+      "id": "ops-manager-rose",
+      "description": "Kembabazi Rose - Operations Manager",
+      "imageUrl": "/images/IMG_8891.jpg",
+      "imageHint": "woman leader"
+    },
+    {
+      "id": "business-loan",
+      "description": "Local entrepreneur using a business loan",
+      "imageUrl": "https://picsum.photos/seed/sacco-biz/800/600",
+      "imageHint": "business growth"
+    },
+    {
+      "id": "agri-finance",
+      "description": "Agricultural investment in Uganda",
+      "imageUrl": "https://picsum.photos/seed/sacco-agri/800/600",
+      "imageHint": "farming finance"
+    },
+    {
+      "id": "education-savings",
+      "description": "Student studying - Education loans",
+      "imageUrl": "https://picsum.photos/seed/sacco-edu/800/600",
+      "imageHint": "student success"
+    },
+    {
+      "id": "sacco-community",
+      "description": "SACCO members in a community meeting",
+      "imageUrl": "https://picsum.photos/seed/sacco-group/800/600",
+      "imageHint": "community meeting"
+    },
+    {
+      "id": "kampala-market",
+      "description": "Nakasero Market Kampala - Supporting local commerce",
+      "imageUrl": "https://www.4x4uganda.com/wp-content/uploads/2023/01/Nakasero-Market-Kampala.jpg",
+      "imageHint": "kampala market"
+    },
+    {
+      "id": "taxi-entrepreneur",
+      "description": "A taxi driver entrepreneur in the city",
+      "imageUrl": "https://media.gettyimages.com/id/1151368592/photo/taxi-with-the-taxi-driver-posing-in-hillbrow-johannesburg.jpg?s=612x612&w=0&k=20&c=4m9x8pDnLB3I2OogORjG_t4rxzAFyx4Tp_jvq1zUcac=",
+      "imageHint": "taxi driver"
+    }
+  ]
+}

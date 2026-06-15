@@ -1,0 +1,154 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 100%; /* White */
+    --foreground: 240 29% 10%; /* Black-ish */
+    --card: 0 0% 100%;
+    --card-foreground: 240 29% 10%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 240 29% 10%;
+    --primary: 39 66% 48%; /* Gold #c9922a */
+    --primary-foreground: 0 0% 100%;
+    --secondary: 215 68% 14%; /* Navy Blue #0b1f3a */
+    --secondary-foreground: 0 0% 100%;
+    --muted: 220 11% 40%;
+    --muted-foreground: 220 11% 40%;
+    --accent: 215 68% 14%; /* Blue */
+    --accent-foreground: 0 0% 100%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 39 15% 90%;
+    --input: 39 15% 90%;
+    --ring: 39 66% 48%;
+    --radius: 0.75rem;
+
+    --font-headline: 'Outfit', sans-serif;
+    --font-serif: 'Cormorant Garamond', serif;
+    --font-body: 'Outfit', sans-serif;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground font-body antialiased selection:bg-[#c9922a] selection:text-white;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-serif tracking-tight;
+  }
+}
+
+.font-headline {
+  font-family: var(--font-headline);
+}
+
+.font-serif {
+  font-family: var(--font-serif);
+}
+
+.font-body {
+  font-family: var(--font-body);
+}
+
+/* Base Animations */
+.fade-in {
+  opacity: 0;
+  animation: fadeIn 0.8s ease-out forwards;
+}
+
+.slide-up {
+  opacity: 0;
+  animation: slideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(40px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes revealSlideRight {
+  from { transform: translateX(0); }
+  to { transform: translateX(100%); }
+}
+
+.reveal-mask-animation {
+  animation: revealSlideRight 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Kinetic Typography Animations */
+@keyframes kineticReveal {
+  from {
+    transform: translateY(105%) skewY(6deg);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0) skewY(0);
+    opacity: 1;
+  }
+}
+
+.kinetic-animate {
+  animation: kineticReveal 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Ink Flow Animations */
+@keyframes inkFlow {
+  from {
+    -webkit-mask-position: 100% 0;
+    mask-position: 100% 0;
+  }
+  to {
+    -webkit-mask-position: 0% 0;
+    mask-position: 0% 0;
+  }
+}
+
+.ink-flow-mask {
+  -webkit-mask-image: linear-gradient(to right, black 40%, transparent 60%);
+  mask-image: linear-gradient(to right, black 40%, transparent 60%);
+  -webkit-mask-size: 250% 100%;
+  mask-size: 250% 100%;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: 100% 0;
+  mask-position: 100% 0;
+}
+
+.ink-flow-active {
+  animation: inkFlow 2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Blur to Focus Animation */
+@keyframes blurFocus {
+  from {
+    filter: blur(20px);
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    filter: blur(0);
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.blur-focus-active {
+  animation: blurFocus 1.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Grid Line Background */
+.bg-grid-lines {
+  background-image: linear-gradient(rgba(201,146,42,0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(201,146,42,0.05) 1px, transparent 1px);
+  background-size: 60px 60px;
+}
