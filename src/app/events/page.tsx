@@ -80,7 +80,7 @@ export default function EventsPage() {
           <ImageReveal 
             src="https://www.4x4uganda.com/wp-content/uploads/2023/01/Nakasero-Market-Kampala.jpg" 
             alt="Local Community Trade" 
-            className="w-full h-full brightness-75 transition-transform duration-[10000ms] group-hover:scale-110"
+            className="w-full h-full brightness-75 transition-transform duration-1000 group-hover:scale-110"
           />
           <div className="absolute inset-0 bg-gradient-to-r from-black/60 to-transparent lg:hidden" />
         </div>

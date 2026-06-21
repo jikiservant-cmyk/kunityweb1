@@ -26,15 +26,41 @@ export default function ActivateAccountPage() {
       } else {
         setUser(session.user);
         
-        // Check if user is already active. If so, redirect to wallet.
-        const { data: accountsData } = await supabase
+        // 1. Get member details first
+        const { data: memberData } = await supabase
           .schema('kuntiy')
-          .from('accounts')
-          .select('is_active')
-          .eq('member_id', session.user.id);
-          
-        if (accountsData && accountsData.some(acc => acc.is_active)) {
-          router.push('/wallet');
+          .from('members')
+          .select('id')
+          .eq('profile_id', session.user.id)
+          .single();
+
+        if (memberData) {
+          // Check if user is already active. If so, redirect to wallet.
+          const { data: accountsData } = await supabase
+            .schema('kuntiy')
+            .from('accounts')
+            .select('is_active')
+            .eq('member_id', memberData.id);
+            
+          let isActive = accountsData && accountsData.some(acc => acc.is_active);
+
+          if (!isActive) {
+            const { data: actPayments } = await supabase
+              .schema('kuntiy')
+              .from('payment_requests')
+              .select('status')
+              .eq('member_id', memberData.id)
+              .like('internal_reference', 'PAY-ACT-%')
+              .eq('status', 'success');
+              
+            if (actPayments && actPayments.length > 0) {
+              isActive = true;
+            }
+          }
+
+          if (isActive) {
+            router.push('/wallet');
+          }
         }
       }
     };

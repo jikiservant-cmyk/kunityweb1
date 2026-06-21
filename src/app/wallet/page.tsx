@@ -34,11 +34,22 @@ export default function WalletPage() {
       if (active) setUser(session.user);
       
       try {
-        // Fetch accounts for the user from public.admin_profiles which updates kuntiy.members
-        // We know member_id in kuntiy matches profile_id or id. The trigger copies id to id in members.
-        const memberId = session.user.id;
+        // 1. Get member details first
+        const { data: memberData } = await supabase
+          .schema('kuntiy')
+          .from('members')
+          .select('id')
+          .eq('profile_id', session.user.id)
+          .single();
+
+        if (!memberData) {
+          if (active) router.push('/activate');
+          return;
+        }
+
+        const memberId = memberData.id;
         
-        // 1. Fetch balance and active status from member accounts
+        // 2. Fetch balance and active status from member accounts
         const { data: accountsData } = await supabase
           .schema('kuntiy')
           .from('accounts')
@@ -50,6 +61,21 @@ export default function WalletPage() {
         if (accountsData && accountsData.length > 0) {
             isActive = accountsData.some(acc => acc.is_active);
             totalBalance = accountsData.reduce((acc, curr) => acc + Number(curr.cached_balance || 0), 0);
+        }
+
+        // 3. Fallback: Check if they have a successful activation payment
+        if (!isActive) {
+          const { data: actPayments } = await supabase
+            .schema('kuntiy')
+            .from('payment_requests')
+            .select('status')
+            .eq('member_id', memberId)
+            .like('internal_reference', 'PAY-ACT-%')
+            .eq('status', 'success');
+            
+          if (actPayments && actPayments.length > 0) {
+            isActive = true;
+          }
         }
 
         if (!isActive) {

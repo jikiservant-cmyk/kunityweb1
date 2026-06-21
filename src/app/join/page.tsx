@@ -180,7 +180,7 @@ export default function JoinSaccoPage() {
             name: productName,
             account_category: 'asset',
             code: `WAL-${Math.floor(Math.random()*10000)}`,
-            is_active: true,
+            is_active: false,
             cached_balance: 0.00
           }).select('id').single();
           

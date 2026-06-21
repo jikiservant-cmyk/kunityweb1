@@ -63,16 +63,26 @@ export async function POST(req: NextRequest) {
     const finalStatus = status === 'Success' ? 'success' : (status === 'Failed' ? 'failed' : 'pending');
 
     if (finalStatus !== 'pending') {
-      const { error: updateError } = await supabase
+      const { data: updatedReqs, error: updateError } = await supabase
         .schema('kuntiy')
         .from('payment_requests')
         .update({ status: finalStatus })
         .eq('internal_reference', customer_reference)
-        .eq('status', 'pending');
+        .eq('status', 'pending')
+        .select('member_id');
 
       if (updateError) {
         console.error('Failed to update payment request from webhook:', updateError);
         return NextResponse.json({ error: 'Failed to update payment record' }, { status: 500 });
+      }
+
+      if (finalStatus === 'success' && updatedReqs && updatedReqs.length > 0) {
+         // Activate member accounts
+         await supabase
+           .schema('kuntiy')
+           .from('accounts')
+           .update({ is_active: true })
+           .eq('member_id', updatedReqs[0].member_id);
       }
     }
 

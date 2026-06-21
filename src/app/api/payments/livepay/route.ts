@@ -22,7 +22,7 @@ export async function POST(req: NextRequest) {
     // 1. Insert pending payment request into our database
     const idempotencyKey = crypto.randomUUID();
     const provider = network === 'MTN' ? 'mtn_momo' : 'airtel_money';
-    const internalReference = `PAYWALL-ACTIVATE-${memberId.substring(0, 8)}`;
+    const internalReference = `PAY-ACT-${memberId.substring(0, 8)}-${Date.now()}`;
 
     const { data: request, error: insertError } = await supabase
       .schema('kuntiy')
