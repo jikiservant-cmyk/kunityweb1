@@ -201,8 +201,8 @@ export default function JoinSaccoPage() {
       }
 
       // 4. Inform the user or redirect
-      alert('Sign up successful! Please check your email to verify your account if email confirmation is enabled, or proceed to login.');
-      router.push('/wallet');
+      alert('Sign up successful! Please proceed to activate your Virtual Account Card.');
+      router.push('/activate');
       
     } catch (err: any) {
       console.error(err);

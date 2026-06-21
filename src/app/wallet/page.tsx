@@ -131,7 +131,7 @@ export default function WalletPage() {
               </div>
               <p className="text-white/70 text-sm font-medium mb-1">Total Balance</p>
               <h2 className="text-4xl font-bold font-serif tabular-nums">
-                <span className="text-2xl mr-1 text-white/50">KES</span>
+                <span className="text-2xl mr-1 text-white/50">UGX</span>
                 {balance.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
               </h2>
             </CardContent>
@@ -145,7 +145,7 @@ export default function WalletPage() {
                 </div>
               </div>
               <p className="text-gray-500 text-sm font-medium mb-1">Total Deposits</p>
-              <h2 className="text-2xl font-bold text-gray-900 tabular-nums">KES {deposits.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</h2>
+              <h2 className="text-2xl font-bold text-gray-900 tabular-nums">UGX {deposits.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</h2>
             </CardContent>
           </Card>
 
@@ -157,7 +157,7 @@ export default function WalletPage() {
                 </div>
               </div>
               <p className="text-gray-500 text-sm font-medium mb-1">Outstanding Loans</p>
-              <h2 className="text-2xl font-bold text-gray-900 tabular-nums">KES {loans.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</h2>
+              <h2 className="text-2xl font-bold text-gray-900 tabular-nums">UGX {loans.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</h2>
             </CardContent>
           </Card>
 
@@ -182,7 +182,7 @@ export default function WalletPage() {
                   </CardHeader>
                   <CardContent className="space-y-4">
                     <div className="space-y-2">
-                      <Label htmlFor="amount">Amount (KES)</Label>
+                      <Label htmlFor="amount">Amount (UGX)</Label>
                       <Input id="amount" placeholder="e.g. 5000" type="number" />
                     </div>
                     <div className="space-y-2">
@@ -206,7 +206,7 @@ export default function WalletPage() {
                   </CardHeader>
                   <CardContent className="space-y-4">
                     <div className="space-y-2">
-                      <Label htmlFor="loanAmount">Loan Amount (KES)</Label>
+                      <Label htmlFor="loanAmount">Loan Amount (UGX)</Label>
                       <Input id="loanAmount" placeholder="e.g. 10000" type="number" />
                     </div>
                     <div className="space-y-2">
@@ -252,7 +252,7 @@ export default function WalletPage() {
                         item.direction === 'outbound' ? 'text-red-600' :
                         'text-gray-500'
                       }`}>
-                        {item.direction === 'inbound' ? '+' : '-'} KES {Number(item.amount || 0).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                        {item.direction === 'inbound' ? '+' : '-'} UGX {Number(item.amount || 0).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                       </div>
                     </div>
                   ))}
@@ -278,7 +278,7 @@ export default function WalletPage() {
                 </div>
                 <div className="flex justify-between items-center text-sm">
                   <span className="text-gray-500">Loan Limit</span>
-                  <span className="font-medium">KES 50,000</span>
+                  <span className="font-medium">UGX 50,000</span>
                 </div>
               </CardContent>
             </Card>
