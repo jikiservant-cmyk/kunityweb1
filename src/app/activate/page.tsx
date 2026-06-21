@@ -18,13 +18,24 @@ export default function ActivateAccountPage() {
   
   useEffect(() => {
     const checkUser = async () => {
-      const supabase = getSupabase();
+      const supabase = getSupabase() as any;
       const { data: { session } } = await supabase.auth.getSession();
       
       if (!session) {
         router.push('/login');
       } else {
         setUser(session.user);
+        
+        // Check if user is already active. If so, redirect to wallet.
+        const { data: accountsData } = await supabase
+          .schema('kuntiy')
+          .from('accounts')
+          .select('is_active')
+          .eq('member_id', session.user.id);
+          
+        if (accountsData && accountsData.some(acc => acc.is_active)) {
+          router.push('/wallet');
+        }
       }
     };
     checkUser();
@@ -32,22 +43,56 @@ export default function ActivateAccountPage() {
 
   const handlePayment = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!phone) return;
+    if (!phone || !user) return;
     
     setLoading(true);
 
     try {
-      // Mocking LivePay integration delay
-      await new Promise(resolve => setTimeout(resolve, 2500));
+      const supabase = getSupabase() as any;
       
-      // Assume a successful response from LivePay API
-      // Redirect to wallet on success
-      alert('Payment successful! Your Virtual Account Card is now active.');
+      // 1. Get member details
+      const { data: member } = await supabase
+        .schema('kuntiy')
+        .from('members')
+        .select('id, organization_id')
+        .eq('profile_id', user.id)
+        .single();
+        
+      if (!member) {
+        throw new Error("Member profile not found. Please contact support.");
+      }
+
+      const { data: { session } } = await supabase.auth.getSession();
+      
+      const response = await fetch('/api/payments/livepay', {
+        method: 'POST',
+        headers: { 
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${session?.access_token}`
+        },
+        body: JSON.stringify({
+          amount: 5000,
+          phone: phone,
+          network: network,
+          memberId: member.id,
+          organizationId: member.organization_id
+        }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || 'Failed to initialize payment.');
+      }
+
+      alert('Payment initiated! Please check your phone for the USSD prompt to enter your PIN. Your Virtual Account Card will automatically activate once the payment succeeds.');
+      
+      // Optionally redirect user to a "waiting for payment" screen or just to wallet where it checks activation
       router.push('/wallet');
 
     } catch (err: any) {
       console.error(err);
-      alert('An error occurred during payment processing.');
+      alert(err.message || 'An error occurred during payment processing.');
     } finally {
       setLoading(false);
     }

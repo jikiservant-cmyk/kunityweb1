@@ -28,7 +28,7 @@ export default function JoinSaccoPage() {
   });
 
   const loadOrgs = async () => {
-    const supabase = getSupabase();
+    const supabase = getSupabase() as any;
     let { data: orgs, error } = await supabase.schema('kuntiy').from('organizations').select('id, name');
     
     if (!orgs || orgs.length === 0) {
@@ -62,7 +62,7 @@ export default function JoinSaccoPage() {
         return;
       }
       
-      const supabase = getSupabase();
+      const supabase = getSupabase() as any;
       const { data: products } = await supabase.schema('kuntiy').from('savings_products').select('*').eq('organization_id', orgId);
       
       if (products && products.length > 0) {
@@ -97,7 +97,7 @@ export default function JoinSaccoPage() {
     setError(null);
 
     try {
-      const supabase = getSupabase();
+      const supabase = getSupabase() as any;
       
       if (!orgId) {
         throw new Error("Please wait for cooperatives to load, or contact support if the issue persists.");

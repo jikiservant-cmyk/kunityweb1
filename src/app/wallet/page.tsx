@@ -23,7 +23,7 @@ export default function WalletPage() {
     let active = true;
 
     const fetchWalletData = async () => {
-      const supabase = getSupabase();
+      const supabase = getSupabase() as any;
       const { data: { session } } = await supabase.auth.getSession();
       
       if (!session) {
@@ -38,16 +38,23 @@ export default function WalletPage() {
         // We know member_id in kuntiy matches profile_id or id. The trigger copies id to id in members.
         const memberId = session.user.id;
         
-        // 1. Fetch balance from member accounts
+        // 1. Fetch balance and active status from member accounts
         const { data: accountsData } = await supabase
           .schema('kuntiy')
           .from('accounts')
-          .select('cached_balance')
+          .select('is_active, cached_balance')
           .eq('member_id', memberId);
           
+        let isActive = false;
         let totalBalance = 0;
         if (accountsData && accountsData.length > 0) {
+            isActive = accountsData.some(acc => acc.is_active);
             totalBalance = accountsData.reduce((acc, curr) => acc + Number(curr.cached_balance || 0), 0);
+        }
+
+        if (!isActive) {
+          if (active) router.push('/activate');
+          return;
         }
         
         // 2. Fetch loans outstanding
@@ -90,7 +97,7 @@ export default function WalletPage() {
   }, [router]);
 
   const handleLogout = async () => {
-    const supabase = getSupabase();
+    const supabase = getSupabase() as any;
     await supabase.auth.signOut();
     router.push('/');
   };
